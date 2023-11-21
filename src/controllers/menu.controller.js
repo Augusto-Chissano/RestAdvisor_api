@@ -64,7 +64,7 @@ export const getMenunInfo = async (req, res) => {
       return res.status(404).json({ message: "Menu não encontrado" });
     }
 
-    res.json(menu.items);
+    res.json(menu);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Erro interno do servidor" });
@@ -73,6 +73,7 @@ export const getMenunInfo = async (req, res) => {
 
 export const deleteItem = async (req, res) => {
   connectToDB();
+  
   try {
     const { menuId, itemId } = req.params;
     const menu = await Menu.findById(menuId);

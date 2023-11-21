@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 
 //<-----ROUTES----->//
 //FILES ROUTE (IMAGES)
-app.use('/uploads', express.static('src/uploads'))
+app.use('/restadvisor/uploads', express.static('src/uploads'))
 
 //MAIN ROUTES
 app.get("/", (req, res) => {
@@ -27,7 +27,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/user", userRoutes);
-app.use("/restaurant", restaurantRoutes)
+app.use("/restaurant", restaurantRoutes);
 app.use("/menu", menuRoutes);
 app.use("/order", orderRequestRoutes);
 

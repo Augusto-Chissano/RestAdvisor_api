@@ -24,7 +24,13 @@ export const createRestaurant = async (req, res) => {
 export const getRestaurants = async (req, res) => {
   connectToDB();
   try {
-    const restaurants = await Restaurant.find();
+    const restaurants = await Restaurant.find().populate({
+      path: "menu",
+      populate: {
+        path: "items",
+        model: "MenuItem"
+      }
+    });
 
     res.status(200).json(restaurants);
   } catch (error) {
@@ -81,7 +87,7 @@ export const addMenu = async (req, res) => {
     restaurant.menu.push(newMenu._id);
     await restaurant.save();
 
-    res.status(201).json(newMenu);
+    res.status(201).json(restaurant);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Erro interno do servidor" });
@@ -148,11 +154,33 @@ export const getMenunInfo = async (req, res) => {
       return res.status(404).json({ message: "Restaurante não encontrado" });
     }
 
-    res.json(restaurant.menu);
+    res.json(restaurant);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Erro interno do servidor" });
   }
 };
 
+export const getRestaurantById = async (req, res) => {
+  connectToDB();
 
+  try {
+    const { restaurantId } = req.params;
+
+    const restaurant = await Restaurant.findById(restaurantId).populate({
+      path: "menu",
+      populate: {
+        path: "items",
+        model: "MenuItem"
+      }
+    });
+    if (!restaurant) {
+      return res.status(404).json({ message: "Restaurante não encontrado" });
+    }
+
+    res.json(restaurant);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Erro interno do servidor" });
+  }
+};

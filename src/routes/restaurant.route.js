@@ -6,6 +6,7 @@ import {
   deleteRestaurant,
   editMenu,
   getMenunInfo,
+  getRestaurantById,
   getRestaurants,
   updateRestaurant,
 } from "../controllers/restaurant.controller.js";
@@ -32,6 +33,7 @@ const upload = multer({ storage: storage });
 //<--RESTAURANTS OPERATIONS ONLY-->//
 router.post("/", upload.single("image"), createRestaurant);
 router.get("/", getRestaurants);
+router.get("/:restaurantId", getRestaurantById);
 router.delete("/:id", deleteRestaurant);
 router.patch("/:id", updateRestaurant);
 

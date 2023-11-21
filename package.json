@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "nodemon src/index.js"
+    "dev": "nodemon src/index.js"
   },
   "author": "Augusto Chissano",
   "license": "ISC",
